@@ -29,6 +29,7 @@ export default class Experiment {
 
 		var x = 40;
 		var y = 40;
+		var coeff = 1;
 
         for( var i = 1; i < 85; i++ ){
             var d = new Dot(x, y);
@@ -39,6 +40,12 @@ export default class Experiment {
         		x = 0;
         	}
         	x += 40;
+
+        	TweenLite.to(d, 2, { x : d.x + coeff*40, ease : Power3.easeOut });
+
+        	if(i % 7 == 0){
+        		coeff = - coeff;
+        	}
         }
 
         this.dots = dots;
@@ -47,23 +54,31 @@ export default class Experiment {
 
 	draw(){
 		var ctx = this.ctx;
+		var w = this.w;
+		var h = this.h;
 		var i = 0;
 		var dots = this.dots;
+		var drawnDots = [];
 		var length = dots.length;
 		var rdm = 0;
 
 		function raf(){
 			requestAnimationFrame(raf);
 
-			rdm = Math.floor(Math.random() * dots.length);
+			if(drawnDots.length < length){
+				ctx.clearRect(0,0, w, h);
+				rdm = Math.floor(Math.random() * dots.length);
+				drawnDots.push(dots[rdm]);
 
-			if(i < length){
-				drawArc(ctx, dots[rdm].x, dots[rdm].y, 4, 'white');
+				for (var i = drawnDots.length - 1; i >= 0; i--) {
+					drawArc(ctx, drawnDots[i].x, drawnDots[i].y, 4, 'white');
+				}
+				dots.splice(rdm, 1);
 			}
-
-			dots.splice(rdm, 1);
 			
-			i++;
+
+			
+			
 		}
 
 		raf();
