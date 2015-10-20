@@ -1,0 +1,1 @@
+window.TweenMax = require('tweenmax');
