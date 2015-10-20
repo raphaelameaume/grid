@@ -35,8 +35,6 @@ export default class Experiment {
             dots.push(d);
 
             if(i % 14 == 0){
-            	console.log('modulo');
-            	console.log(i);
         		y += 40; 
         		x = 0;
         	}
@@ -52,13 +50,18 @@ export default class Experiment {
 		var i = 0;
 		var dots = this.dots;
 		var length = dots.length;
+		var rdm = 0;
 
 		function raf(){
 			requestAnimationFrame(raf);
 
+			rdm = Math.floor(Math.random() * dots.length);
+
 			if(i < length){
-				drawArc(ctx, dots[i].x, dots[i].y, 4, 'white');
+				drawArc(ctx, dots[rdm].x, dots[rdm].y, 4, 'white');
 			}
+
+			dots.splice(rdm, 1);
 			
 			i++;
 		}
