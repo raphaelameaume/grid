@@ -20,6 +20,7 @@ export default class Particle extends PIXI.Graphics {
 			y : _y
 		};
 		this.visible = false;
+		this.lastMove = null;
 
 	    this.vx = Math.random();
 	    this.vy = Math.random();
@@ -31,12 +32,29 @@ export default class Particle extends PIXI.Graphics {
 
 	show(){
 		this.visible = true;
-		TweenMax.to(this.position, 2, { x: this.initialPosition.x, y: this.initialPosition.y, ease: Power4.easeOut, yoyo: true});
+		TweenLite.to(this.position, 2, { x: this.initialPosition.x, y: this.initialPosition.y, ease: Power4.easeOut});
 	}
 
 	update() {
 	    // this.position.x += this.vx;
 	    // this.position.y += this.vy;
   	}
+
+  	distanceTo(point){
+  		return Math.sqrt(this.distanceToSq(point));
+  	}
+
+  	distanceToSq(v) {
+    	var dx = this.position.x - v.x, dy = this.position.y - v.y;
+    	return dx * dx + dy * dy;
+	}
+
+	tryToGoHome(now){
+		if(this.lastMove && (now - this.lastMove > 200)){
+			TweenMax.to(this.position, 2, { x: this.initialPosition.x, y: this.initialPosition.y, ease: Power4.easeOut});
+		}
+	}
+
+
 
 }
