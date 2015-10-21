@@ -15,7 +15,8 @@
     "babel"
   ],
   "dependencies": {
-    "gsap": "^1.18.0"
+    "gsap": "^1.18.0",
+    "pixi.js": "^3.0.8"
   },
   "devDependencies": {
     "autoprefixer-core": "^5.2.1",
@@ -52,6 +53,7 @@
     "watchify": "^3.3.1"
   },
   "browser": {
+    "pixi.js": "./node_modules/pixi.js/bin/pixi.min.js",
     "tweenmax": "./node_modules/gsap/src/minified/TweenMax.min.js"
   }
 }

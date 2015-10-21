@@ -5,7 +5,7 @@ const config = {
 	browserSupport : ['last 2 versions', '> 5%'],
 	entry : {
 		path : app,
-		scripts : app + '/js/app.js',
+		scripts : app + '/js/index.js',
 		vendors : app + '/js/vendors.js',
 		styles : app + '/css/index.styl'
 	},
