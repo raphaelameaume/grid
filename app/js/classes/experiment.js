@@ -10,25 +10,25 @@ export default class Experiment {
 	    let h = window.innerHeight;
 	    this.scene = new Scene( w, h );
 
-	    this.nbParticles = 85;
+	    this.nbParticles = 401;
 	    this.particles = [];
 	    this.drawnParticles = [];
 	    this.lastMousePos = null;
 	    this.time = 0;
 	    this.goingHome = false;
 
-	    let spaceBetween = 50;
-	    let x = w/2 - (spaceBetween*7);
-		let y = h/2 - (spaceBetween*3);
+	    let spaceBetween = 20;
+	    let x = w/2 - (spaceBetween*20);
+		let y = h/2 - (spaceBetween*10);
 
 	    for (var i = 1; i < this.nbParticles; i++) {
 	    	this.particle = new Particle(x, y, i);
    			this.scene.addChild(this.particle);
    			this.particles.push(this.particle);
 
-   			if(i % 14 == 0){
+   			if(i % 40 == 0){
 	    		y += spaceBetween; 
-	    		x = w/2 - (spaceBetween*7) - spaceBetween;
+	    		x = w/2 - (spaceBetween*20) - spaceBetween;
 	    	}
 	    	x += spaceBetween;
 	    };
@@ -61,34 +61,35 @@ export default class Experiment {
   		let scope = this;
   		let mousePosition = this.scene.renderer.plugins.interaction.mouse.global;
 
-  		if(mousePosition == this.lastMousePos){
-  			this.time++
+  		// if(mousePosition == this.lastMousePos){
+  		// 	this.time++
 
-  			if(this.time > 200){
-  				this.time = 0;
-  				this.goingHome = true;
+  		// 	if(this.time > 200){
+  		// 		this.time = 0;
+  		// 		this.goingHome = true;
 
-  				TweenMax.staggerTo(this.drawnParticles, 0.5, {
-  					cycle : {
-  						x : function(i){
-  							return scope.drawnParticles[i].initialPosition.x
-  						},
-  						y : function(i){
-  							return scope.drawnParticles[i].initialPosition.y
-  						},
-  						ease : Power4.easeOut
-  					},
-  					onComplete : () =>{
-  						scope.goingHome = false;
-  					}
-  				}, 0.01)
-  			}
-  		}
-  		if(!this.goingHome){
+  		// 		TweenMax.staggerTo(this.drawnParticles, 0.5, {
+  		// 			cycle : {
+  		// 				x : function(i){
+  		// 					return scope.drawnParticles[i].initialPosition.x
+  		// 				},
+  		// 				y : function(i){
+  		// 					return scope.drawnParticles[i].initialPosition.y
+  		// 				},
+  		// 				ease : Power4.easeOut
+  		// 			},
+  		// 			onComplete : () =>{
+  		// 				scope.goingHome = false;
+  		// 			}
+  		// 		}, 0.01)
+  		// 	}
+  		// }
   			for (var i = 0; i < this.drawnParticles.length; i++) {
 	  			var particle = this.drawnParticles[i];
 	  			var distance = particle.distanceTo(mousePosition)
 	  			if( distance < 70){
+	  				// particle.position.x = particle.position.x - ((mousePosition.x - particle.position.x)/(distance/3));
+	  				// particle.position.y = particle.position.y - ((mousePosition.y - particle.position.y)/(distance/3));
 	  				TweenLite.to(particle.position, 2, { 
 	  					x: particle.position.x - (mousePosition.x - particle.position.x),
 	  					y: particle.position.y - (mousePosition.y - particle.position.y),
@@ -96,7 +97,6 @@ export default class Experiment {
 	  				});
 	  			}
   			}
-  		}
 
   		this.lastMousePos = mousePosition;
   	}
